@@ -24,7 +24,7 @@ extension JSON {
     public init?(data: Data?, options: JSONSerialization.ReadingOptions = [.allowFragments]) {
         guard
             let data = data,
-            let object = try? JSONSerialization.jsonObject(with: data, options: options) as AnyObject,
+            let object = try? JSONSerialization.jsonObject(with: data, options: options),
             let json = JSON(object: object)
         else { return nil }
         
