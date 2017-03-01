@@ -33,7 +33,7 @@ $ brew install carthage
 To integrate Olympia into your Xcode project using Carthage, specify it in your [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile):
 
 ```ogdl
-github "ovenbits/Olympia"
+github "jlandon/Olympia"
 ```
 
 Then, run `carthage update`.
@@ -52,7 +52,7 @@ let package = Package(
     name: "PROJECT_NAME",
     targets: [],
     dependencies: [
-        .Package(url: "https://github.com/ovenbits/Olympia.git", versions: "1.0.0" ..< Version.max)
+        .Package(url: "https://github.com/jlandon/Olympia.git", versions: "1.0.0" ..< Version.max)
     ]
 )
 ```
