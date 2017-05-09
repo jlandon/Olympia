@@ -46,20 +46,22 @@ extension Transformable where Self: RawRepresentable, Self.RawValue == Int {
     
 }
 
+extension CharacterSet {
+    
+    fileprivate static let url = CharacterSet().union(.urlFragmentAllowed)
+                                               .union(.urlHostAllowed)
+                                               .union(.urlPasswordAllowed)
+                                               .union(.urlQueryAllowed)
+                                               .union(.urlUserAllowed)
+                                               .union(.urlPathAllowed)
+    
+}
+
 extension URL: Transformable {
     
     public static func deserialize(json: JSON) throws -> URL {
-        
-        var urlSet = CharacterSet()
-        urlSet.formUnion(.urlFragmentAllowed)
-        urlSet.formUnion(.urlHostAllowed)
-        urlSet.formUnion(.urlPasswordAllowed)
-        urlSet.formUnion(.urlQueryAllowed)
-        urlSet.formUnion(.urlUserAllowed)
-        urlSet.formUnion(.urlPathAllowed)
-        
         guard
-            let string = json.string?.addingPercentEncoding(withAllowedCharacters: urlSet),
+            let string = json.string?.addingPercentEncoding(withAllowedCharacters: .url),
             let url = self.init(string: string)
         else { throw JSON.Error.inconvertible(value: json, to: URL.self) }
         
