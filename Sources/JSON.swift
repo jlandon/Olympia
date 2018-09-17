@@ -268,11 +268,11 @@ extension JSON {
     }
     
     public func decode<T: Transformable>(_ keys: Path...) throws -> [T] {
-        return try throwingValue(for: keys).flatMap { try T.deserialize(json: $0) }
+        return try throwingValue(for: keys).compactMap { try T.deserialize(json: $0) }
     }
     
     public func decode<T: Decodable>(_ keys: Path...) throws -> [T] {
-        return try throwingValue(for: keys).flatMap { try T(json: $0) }
+        return try throwingValue(for: keys).compactMap { try T(json: $0) }
     }
     
     public func decode<T: Decodable>(_ keys: Path...) throws -> [String : T] {
@@ -423,11 +423,11 @@ extension JSON {
     }
     
     public func array<T: Decodable>(_ keys: Path...) -> [T] {
-        return value(for: keys).flatMap(T.decode)
+        return value(for: keys).compactMap(T.decode)
     }
     
     public func array<T: Transformable>(_ keys: Path...) -> [T] {
-        return value(for: keys).flatMap { try? T.deserialize(json: $0) }
+        return value(for: keys).compactMap { try? T.deserialize(json: $0) }
     }
     
 }
@@ -446,14 +446,14 @@ extension JSON {
     }
     
     public func dictionary<T: Decodable>(_ keys: Path...) -> [String : T] {
-        return Dictionary(pairs: value(for: keys).dictionary.flatMap {
+        return Dictionary(pairs: value(for: keys).dictionary.compactMap {
             guard let value = try? T(json: $1) else { return nil }
             return ($0, value)
         })
     }
     
     public func dictionary<T: Transformable>(_ keys: Path...) -> [String : T] {
-        return Dictionary(pairs: value(for: keys).dictionary.flatMap {
+        return Dictionary(pairs: value(for: keys).dictionary.compactMap {
             guard let value = try? T.deserialize(json: $1) else { return nil }
             return ($0, value)
         })

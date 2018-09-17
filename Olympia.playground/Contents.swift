@@ -2,7 +2,7 @@
 
 import Olympia
 
-struct Vehicle: Decodable {
+struct Vehicle: Olympia.Decodable {
     let make: String
     let model: String
     let year: Int?
