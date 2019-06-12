@@ -81,7 +81,8 @@ extension UIColor: Transformable {
         
         var hexString = string
         if hexString.hasPrefix("#") {
-            hexString = hexString.substring(from: hexString.index(after: hexString.startIndex))
+            let index = hexString.index(after: hexString.startIndex)
+            hexString = String(hexString[index...])
         }
         
         let scanner = Scanner(string: hexString)

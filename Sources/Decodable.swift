@@ -39,8 +39,8 @@ extension Decodable {
                 inspect(parentMirror).forEach { mappings.updateValue($0.1, forKey: $0.0) }
             }
             
-            let keys = mirror.children.flatMap { $0.label }
-            let values: [AnyObject] = mirror.children.flatMap {
+            let keys = mirror.children.compactMap { $0.label }
+            let values: [AnyObject] = mirror.children.compactMap {
                 let value = $0.value
                 let mirror = Mirror(reflecting: value)
                 let optionalValue = mirror.descendant("some")
@@ -141,7 +141,7 @@ extension Bool: Decodable {
     public init(json: JSON) throws {
         switch json {
         case .i(let int):
-            self = Bool(NSNumber(value: int))
+            self = Bool(truncating: NSNumber(value: int))
         case .str(let string):
             switch string.lowercased() {
             case "true":
